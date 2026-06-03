@@ -29,6 +29,50 @@ _collection = _chroma.get_collection(name=COLLECTION)
 print(f"Connected to collection '{COLLECTION}' ({_collection.count()} entries)")
 
 
+# ── Greeting tables ──────────────────────────────────────────────────────────
+
+_GREETINGS = {
+    "fr": {
+        "tokens": {"bonjour", "salut", "bonsoir", "coucou", "merci"},
+        "phrases": {"ça va", "ca va"},
+        "reply": (
+            "Bonjour ! Je suis l'assistant assurance Sanlam. "
+            "Posez-moi vos questions sur l'assurance auto ou santé au Maroc — je suis là pour vous aider !"
+        ),
+    },
+    "ar": {
+        "tokens": {"سلام", "مرحبا", "شكرا"},
+        "phrases": {"السلام عليكم", "صباح الخير", "مساء الخير"},
+        "reply": (
+            "مرحباً! أنا مساعد التأمين لدى سانلام. "
+            "يمكنك سؤالي عن تأمين السيارة أو التأمين الصحي في المغرب — أنا هنا لمساعدتك!"
+        ),
+    },
+    "en": {
+        "tokens": {"hi", "hello", "hey", "thanks", "thank"},
+        "phrases": set(),
+        "reply": (
+            "Hello! I'm the Sanlam insurance assistant. "
+            "Feel free to ask me anything about auto or health insurance in Morocco!"
+        ),
+    },
+}
+
+def _greeting_reply(text: str) -> str | None:
+    """Return a canned greeting reply if the message is a short greeting, else None."""
+    # Only intercept very short messages (≤ 6 words) to avoid catching real questions
+    words = text.strip().split()
+    if len(words) > 6:
+        return None
+    normalised = text.strip().lower()
+    for lang_data in _GREETINGS.values():
+        if normalised in lang_data["phrases"]:
+            return lang_data["reply"]
+        if any(w in lang_data["tokens"] for w in normalised.split()):
+            return lang_data["reply"]
+    return None
+
+
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 def _detect_lang(text: str) -> str:
@@ -66,8 +110,13 @@ def _build_system_prompt(lang: str) -> str:
 def answer_question(user_question: str) -> str:
     """
     Full RAG pipeline: detect language -> embed -> retrieve -> generate.
-    Returns the LLM answer with <think> blocks stripped.
+    Short greetings are intercepted before retrieval and return a canned reply.
     """
+    # Short-circuit: greetings and thanks never need retrieval or the LLM
+    greeting = _greeting_reply(user_question)
+    if greeting:
+        return greeting
+
     # a. Language detection
     lang = _detect_lang(user_question)
 
@@ -105,14 +154,17 @@ def answer_question(user_question: str) -> str:
 
 if __name__ == "__main__":
     test_questions = [
-        "Dans quel délai doit-on déclarer un accident de voiture ?",   # FR — in data
-        "ما هي نسبة تعويض الفحص الطبي؟",                              # AR — in data
-        "Est-ce que l'assurance voyage est couverte ?",                 # FR — NOT in data
+        ("bonjour",                                        "FR greeting — canned reply"),
+        ("شكرا",                                           "AR greeting — canned reply"),
+        ("Dans quel délai doit-on déclarer un accident ?", "FR — in data (RAG)"),
+        ("ما هي نسبة تعويض الفحص الطبي؟",                 "AR — in data (RAG)"),
+        ("Est-ce que l'assurance voyage est couverte ?",   "FR — NOT in data"),
     ]
 
     print("\n" + "=" * 60)
-    for question in test_questions:
-        print(f"\nQuestion: {question}")
+    for question, label in test_questions:
+        print(f"\n[{label}]")
+        print(f"Question: {question}")
         print("-" * 60)
         answer = answer_question(question)
         print(f"Reponse: {answer}")
