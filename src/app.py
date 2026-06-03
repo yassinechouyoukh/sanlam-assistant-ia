@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import streamlit as st
 from rag import answer_question
+from db import init_db, save_interaction, get_recent
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -35,6 +36,10 @@ def _render_bubble(text: str, role: str) -> None:
             st.markdown(text)
 
 
+# ── DB init (runs once per session) ──────────────────────────────────────────
+
+init_db()
+
 # ── Page config ───────────────────────────────────────────────────────────────
 
 st.set_page_config(
@@ -55,6 +60,19 @@ with st.sidebar:
     if st.button("🗑️ Effacer la conversation", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
+
+    st.divider()
+    with st.expander("📋 Historique / السجل"):
+        rows = get_recent(limit=10)
+        if not rows:
+            st.caption("Aucune conversation enregistrée.")
+        for row in rows:
+            # row: (id, created_at, lang, question, answer)
+            flag = "🇲🇦" if row[2] == "ar" else "🇫🇷"
+            q = row[3][:60] + "…" if len(row[3]) > 60 else row[3]
+            a = row[4][:80] + "…" if len(row[4]) > 80 else row[4]
+            st.markdown(f"**{flag} {row[1]}**  \n*Q:* {q}  \n*R:* {a}")
+            st.divider()
 
 # ── Header ────────────────────────────────────────────────────────────────────
 
@@ -87,3 +105,7 @@ if prompt := st.chat_input("Votre question... / سؤالك..."):
 
     st.session_state.messages.append({"role": "assistant", "content": answer})
     _render_bubble(answer, "assistant")
+
+    # Persist to SQLite
+    lang = "ar" if _is_arabic(prompt) else "fr"
+    save_interaction(lang, prompt, answer)
