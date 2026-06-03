@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Shield, Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin } from 'lucide-react'
 
 const PRODUCTS = [
   { to: '/auto',  label: 'Assurance Auto' },
@@ -40,9 +40,12 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link to="/" className="inline-flex items-center gap-2 text-white font-bold text-xl mb-4">
-              <Shield className="w-7 h-7 text-blue-300" />
-              <span>Sanlam</span>
+            <Link to="/" className="inline-block mb-4">
+              <img
+                src="/sanlam-logo-white.png"
+                alt="Sanlam Maroc"
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <p className="text-blue-100/60 text-sm leading-relaxed max-w-xs">
               Votre partenaire de confiance pour l'assurance au Maroc depuis plus de 50 ans.

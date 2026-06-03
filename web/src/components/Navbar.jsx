@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Shield, Menu, X, Phone } from 'lucide-react'
+import { Menu, X, Phone } from 'lucide-react'
 
 const NAV_LINKS = [
   { to: '/',        label: 'Accueil' },
@@ -32,9 +32,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-white font-bold text-xl shrink-0">
-            <Shield className="w-7 h-7 text-blue-300" />
-            <span>Sanlam</span>
+          <Link to="/" className="shrink-0">
+            <img
+              src="/sanlam-logo-white.png"
+              alt="Sanlam Maroc"
+              className="h-10 w-auto object-contain"
+              style={{ imageRendering: 'crisp-edges' }}
+            />
           </Link>
 
           {/* Desktop links */}
