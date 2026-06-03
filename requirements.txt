@@ -3,3 +3,5 @@ chromadb
 sentence-transformers
 ollama
 streamlit
+fastapi
+uvicorn[standard]
