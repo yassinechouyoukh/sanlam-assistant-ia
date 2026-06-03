@@ -1,4 +1,11 @@
 .venv/
 __pycache__/
+*.pyc
 chroma_db/
 insurance.db
+.env
+node_modules/
+dist/
+web/node_modules/
+web/dist/
+.DS_Store
