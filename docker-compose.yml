@@ -1,0 +1,24 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # Points the ollama Python client at the host machine.
+      # host.docker.internal resolves via extra_hosts below on Linux;
+      # it resolves automatically on Docker Desktop (macOS/Windows).
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend

@@ -1,0 +1,17 @@
+# Python runtime artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Generated data (rebuilt inside the image by ingest.py)
+chroma_db/
+insurance.db
+
+# Version control
+.git/
+.gitignore
+
+# Frontend build artifacts (not needed by the backend image)
+web/node_modules/
+web/dist/
