@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanlam Maroc — Assurance Auto & Santé</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#">Sanlam</a>
+      <ul class="nav-links">
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">Auto</a></li>
+        <li><a href="#">Santé</a></li>
+        <li><a href="#" class="nav-cta">Obtenir un devis</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-badge">Assureur de confiance au Maroc</span>
+      <h1>Votre partenaire assurance<br />au Maroc</h1>
+      <p>Des solutions adaptées pour protéger ce qui compte le plus —
+         votre véhicule, votre santé, et votre famille.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Demander un devis</a>
+        <a href="#" class="btn btn-outline">En savoir plus</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Products ───────────────────────────────────────────────────────── -->
+  <section class="products">
+    <div class="section-inner">
+      <h2 class="section-title">Nos produits</h2>
+      <p class="section-sub">Choisissez la couverture qui vous convient</p>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-icon">🚗</div>
+          <h3>Assurance Auto</h3>
+          <p>Responsabilité civile obligatoire, tous risques, bris de glace,
+             assistance 24h/24 — des garanties qui s'adaptent à votre usage.</p>
+          <ul class="card-features">
+            <li>Couverture RC obligatoire</li>
+            <li>Protection tous risques</li>
+            <li>Assistance dépannage 24/7</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-sm">Découvrir</a>
+        </div>
+
+        <div class="card card-accent">
+          <div class="card-icon">🏥</div>
+          <h3>Assurance Santé</h3>
+          <p>Complémentaire AMO, hospitalisation, consultations spécialisées
+             et médicaments — prenez soin de vous et des vôtres.</p>
+          <ul class="card-features">
+            <li>Remboursement consultations</li>
+            <li>Couverture hospitalière</li>
+            <li>Réseau de cliniques partenaires</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-sm">Découvrir</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats banner ───────────────────────────────────────────────────── -->
+  <section class="stats">
+    <div class="section-inner stats-grid">
+      <div class="stat">
+        <span class="stat-num">+500 000</span>
+        <span class="stat-label">assurés au Maroc</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">98 %</span>
+        <span class="stat-label">de satisfaction client</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">assistance disponible</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">48 h</span>
+        <span class="stat-label">délai moyen de remboursement</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo">Sanlam</span>
+        <p>Protéger les Marocains, c'est notre mission.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Produits</h4>
+        <a href="#">Assurance Auto</a>
+        <a href="#">Assurance Santé</a>
+        <a href="#">Prévoyance</a>
+      </div>
+      <div class="footer-links">
+        <h4>Aide</h4>
+        <a href="#">FAQ</a>
+        <a href="#">Déclarer un sinistre</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sanlam Maroc — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <!-- ── Chat widget ─────────────────────────────────────────────────────── -->
+  <div id="chat-widget">
+
+    <!-- Floating toggle button -->
+    <button id="chat-toggle" aria-label="Ouvrir l'assistant">
+      <span id="chat-icon-open">🛡️</span>
+      <span id="chat-icon-close" hidden>✕</span>
+    </button>
+
+    <!-- Chat panel -->
+    <div id="chat-panel" hidden>
+      <div id="chat-header">
+        <span>🛡️ Assistant Assurance</span>
+        <small>Français · العربية</small>
+      </div>
+
+      <div id="chat-messages" role="log" aria-live="polite">
+        <div class="bubble bubble-bot">
+          Bonjour ! Posez-moi vos questions sur l'assurance auto ou santé —
+          en français ou en arabe. / أهلاً! اسألني عن التأمين.
+        </div>
+      </div>
+
+      <div id="chat-input-row">
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="Votre question... / سؤالك..."
+          autocomplete="off"
+        />
+        <button id="chat-send" aria-label="Envoyer">➤</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
