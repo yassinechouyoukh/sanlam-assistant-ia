@@ -26,6 +26,10 @@ _embedder = SentenceTransformer(EMBED_MODEL)
 
 _chroma = chromadb.PersistentClient(path=CHROMA_DIR)
 _collection = _chroma.get_collection(name=COLLECTION)
+
+# Ollama client — OLLAMA_HOST lets Docker point to host.docker.internal;
+# defaults to localhost so the existing local workflow is unchanged.
+_ollama = ollama.Client(host=os.environ.get("OLLAMA_HOST", "http://localhost:11434"))
 print(f"Connected to collection '{COLLECTION}' ({_collection.count()} entries)")
 
 
@@ -135,9 +139,9 @@ def answer_question(user_question: str) -> str:
         context_parts.append(f"Q: {meta['question']}\nR: {meta['answer']}")
     context = "\n\n".join(context_parts)
 
-    # d. Call Qwen3 via Ollama
+    # d. Call Qwen3 via Ollama (host resolved from OLLAMA_HOST env var)
     user_prompt = f"Contexte:\n{context}\n\nQuestion: {user_question}"
-    response = ollama.chat(
+    response = _ollama.chat(
         model=LLM_MODEL,
         messages=[
             {"role": "system", "content": _build_system_prompt(lang)},
