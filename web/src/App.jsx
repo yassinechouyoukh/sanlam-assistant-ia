@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ChatWidget from './components/ChatWidget'
 import Accueil from './pages/Accueil'
 import Auto from './pages/Auto'
 import Sante from './pages/Sante'
@@ -32,8 +33,7 @@ export default function App() {
         <Footer />
       </div>
 
-      {/* ── Chat widget mount point — integrated in next step ── */}
-      <div id="chat-widget-root" className="fixed bottom-6 right-6 z-50" />
+      <ChatWidget />
     </BrowserRouter>
   )
 }
